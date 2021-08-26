@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Somma pesi</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   </head>
+   <body>
+   	<input type="text" name="firstweight" id="firstweight" placeholder="iinserisci primo peso" /> 
+   	<input type="text" name="secondweight" id="secondweight" placeholder="iinserisci secondo peso" /> 
+   	<input type="text" name="result" id="result"> 
+   	<button name="start" id="start">INVIA</button>
+   	
+   	
+   	<script>
+   		$(document).ready(function(	){
+   			alert("va");
+   			$.("#start").click(function(){
+   				let first = $("#firstweight").val();
+   				let second = $("#secondweight").val();
+   				let sum = parseInt(first) + parseInt(second);
+   				alert(sum);
+   			
+   			
+   		});
+   		});
+   	</script>
+      
+   </body>
+</html>

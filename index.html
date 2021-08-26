@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #areamonth {
+      display: none;
+    }
+
+    #bigbutcontainer {
+      width: 600px;
+      margin: 100px;
+    }
+
+    .bigbut {
+      width: 120px;
+      height: 40px;
+      cursor: pointer;
+
+    }
+
+    #myform {
+      margin: 30px;
+    }
+
+    #viewinputform {
+      margin: 30px;
+      margin-bottom: 60px;
+    }
+
+    #viewdata {
+      margin: 30px;
+      width: 400px;
+
+
+    }
+
+    #areamonth,
+    #areatotal,
+    #areadata {
+      float: right;
+      display: none;
+      clear: both;
+    }
+
+    #output {
+      visibility: hidden;
+      border: solid;
+      border-width: 3px;
+      border-color: black;
+      margin-top: 40px;
+    }
+
+    #output td {
+      border: solid;
+      border-width: 1px;
+      text-align: center;
+      padding: 6px;
+    }
+
+    #output3 {
+      visibility: hidden;
+      border: solid;
+      border-width: 3px;
+      border-color: black;
+      margin-top: 40px;
+    }
+
+    #output3 td {
+      border: solid;
+      border-width: 1px;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .myselect {
+      padding: 10px;
+      margin: 10px;
+      border: black;
+      border-style: solid;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script> -->
+</head>
+
+<body>
+	
+  <div id="viewinputform">
+  	
+  	<select class="whattauser" id="chi">
+                    <!--<option disabled="disabled" selected></option>
+                      <option>Male</option>
+                      <option>Female</option>-->  
+                    </select>
+
+   
+  	
+  	
+ <!-- <select name="chi" id="chi">
+     <option value="io">IO</option>
+      <option value="chiara">Chiara</option>
+      <option value="simona">Simona</option>
+      <option value="mamma">Mamma</option>
+    </select>-->  
+    <label for="amount">Amount</label>
+    <input type="number" name="amount" id="amount" placeholder="write how much">
+    <label for="causal">Causal</label>
+    <input type="text" name="causal" id="causal" placeholder="write why">
+
+    <button name="sendbut" id="sendbut" value="send amount">Send amount</button>
+  </div>
+  <div id="viewdata">
+    <div id="bigbutcontainer">
+      <button class="bigbut" id="showdata">show data</button>
+
+      <button class="bigbut" id="maketotal">makes total</button>
+      <button class="bigbut" id="monthdata">monthly</button>
+    </div>
+    <div class="myselect" id="areadata">
+      area data
+      <select class="whattauser" id="whodata">
+       <!-- <option value="io">IO</option>
+        <option value="chiara">Chiara</option>
+        <option value="simona">Simona</option>
+        <option value="mamma">Mamma</option>-->
+
+      </select>
+      <button id="sendshowdata">show data</button>
+      <table id="output"></table>
+    </div>
+    <div class="myselect" id="areatotal">
+      area total
+      <select class="whattauser" id="whosum">
+        <!--<option value="io">IO</option>
+        <option value="chiara">Chiara</option>
+        <option value="simona">Simona</option>
+        <option value="mamma">Mamma</option>-->
+
+      </select>
+      <button id="senddata">Send</button>
+      <div id="output2"></div>
+    </div>
+
+    <div class="myselect" id="areamonth">
+      area month data
+      <select class="whattauser" id="whototable">
+        <!--<option value="io">Io</option>
+        <option value="chiara">Chiara</option>
+        <option value="simona">Simona</option>
+        <option value="mamma">Mamma</option>-->
+
+      </select>
+      <select id="year">
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+      <select id="month">
+        <option value="1">gennaio</option>
+        <option value="2">febbraio</option>
+        <option value="3">marzo</option>
+        <option value="4">aprile</option>
+        <option value="5">maggio</option>
+        <option value="6">giugno</option>
+        <option value="7">luglio</option>
+        <option value="8">agosto</option>
+        <option value="9">settembre</option>
+        <option value="10">ottobre</option>
+        <option value="11">novembre</option>
+        <option value="12">dicembre</option>
+      </select>
+      <button id="sendmonthbut">make query</button>
+      <table id="output3">
+      </table>
+    </div>
+  </div>
+  
+  <button id="newperson" name="newperson">INSERT NEW SUBJECT</button>
+
+
+
+
+
+  <script>
+  
+   	$("#newperson").click(function(){
+  		var url = "insertperson.html";
+  		$(location).attr("href", url);
+  	});
+    $(document).ready(function () {
+     	//##### select script ##################
+       $.getJSON("selectname.php", function(json){
+       	$('.whattauser').empty();
+       	$.each(json, function(i, obj){
+  $('.whattauser').append($('<option>').text(obj).attr('value', obj));
+ 
+        });
+  });
+  
+  
+  	
+  	/*$.ajax({
+     
+  		type: "POST",
+  		url: "selectname.php",
+  		dataType: "JSON",
+  		success: function(dataarray){
+          $.each(dataarray, function(i, optionHtml){
+              $('#chi').append(optionHtml);
+           });
+
+  					}
+  			});*/
+  
+  	//####### end select script ##############
+      $("#sendbut").click(function () {
+        var who = $("#chi").val();
+        var howmuch = $("#amount").val();
+        var butwhy = $("#causal").val();
+        $.ajax({
+          type: "POST",
+          url: "connectdb.php",
+          data: "who=" + who + "&howmuch=" + howmuch + "&butwhy=" + butwhy,
+          dataType: "json",
+          success: function (message) {
+            $("#amount").val("");
+            $("#causal").val("");
+          }
+
+        });
+
+      });
+
+      $("#maketotal").click(function () {
+        $("#areadata").css({
+          "display": "none"
+        });
+        $("#areamonth").css({
+          "display": "none"
+        });
+        $("#areatotal").toggle();
+
+      });
+      $("#senddata").click(function () {
+ 
+
+        var who2 = $("#whosum").val();
+
+
+        $.ajax({
+        type: "POST",
+          url: "somma.php",
+          data: { who2: who2 },
+          dataType: "json",
+          success: function (message) {
+
+            $('#output2').text("totale data a " + who2 + " = " + message + " €");
+            $('#output2').css({
+              "border-style": "solid",
+              "border-width": "1px",
+              "width": "200px",
+              "padding": "4px",
+              "margin": "6px"
+            });
+
+          },
+
+          error: function (e) {
+            alert(e.message);
+
+          }
+
+
+        });
+
+
+      });
+      $("#showdata").click(function () {
+        $("#areadata").toggle();
+        $("#areatotal").css({
+          "display": "none"
+        });
+        $("#areamonth").css({
+          "display": "none"
+        });
+        // $("#output").toggle();
+
+      });
+      $("#sendshowdata").click(function () {
+        var who3 = $("#whodata").val();
+        $.ajax({
+          type: "POST",
+          url: "vista_1.php",
+          dataType: "json",
+          data: { who3: who3 },
+          success: function (msg) {
+            console.log(msg);
+
+            $('#output').css({
+              "visibility": "visible"
+            });
+
+            // alert(msg);
+            // document.write(msg[0][1]);
+            $("#output").empty();
+            var testa = "<tr><th>id</th><th>giorno</th><th>moneyexit</th><th>causale</th></tr>";
+            $(testa).appendTo("#output");
+            $.each(msg, function (index, value) {
+              // $("#output").empty();
+              var newRow =
+                "<tr>"
+                + "<td>" + value.id + "</td>"
+                + "<td>" + value.giorno + "</td>"
+                + "<td>" + value.moneyexit + "</td>"
+                + "<td>" + value.causale + "</td>"
+                + "</tr>";
+              $(newRow).appendTo("#output");
+
+            });
+
+
+          },
+          error: function (e) {
+            alert(e.message);
+          }
+
+
+        });
+
+      });
+
+      $("#monthdata").click(function () {
+        $("#areatotal").css({
+          "display": "none"
+        });
+        $("#areadata").css({
+          "display": "none"
+        });
+        $("#areamonth").toggle();
+      });
+      $("#sendmonthbut").click(function () {
+
+        var year = $("#year").val();
+        var month = $("#month").val();
+        var tablechoiced = $("#whototable").val();
+        // alert("fanculo " + year + " " + month + " " + tablechoiced);
+
+        $.ajax({
+          type: "POST",
+          url: "vista_2.php",
+          dataType: "json",
+          data: {
+            year: year,
+            month: month,
+            table: tablechoiced
+          },
+          success: function (msg3) {
+            console.log(msg3);
+            $("#output3").css({
+              "visibility": "visible"
+            });
+            $("#output3").empty();
+            var testa3 = "<tr><th>id</th><th>giorno</th><th>moneyexit</th><th>causale</th></tr>";
+            $(testa3).appendTo("#output3");
+            $.each(msg3, function (index, value) {
+              // $("#output").empty();
+              var newRow3 =
+                "<tr>"
+                + "<td>" + value.id + "</td>"
+                + "<td>" + value.giorno + "</td>"
+                + "<td>" + value.moneyexit + "</td>"
+                + "<td>" + value.causale + "</td>"
+                + "</tr>";
+              $(newRow3).appendTo("#output3");
+
+            });
+
+
+          }
+
+        })
+      });
+
+    });
+  </script>
+  <!-- <table id="output">
+
+  </table>
+  <div id="output2"></div>
+  </div>
+  <table id="output3">
+
+  </table> -->
+</body>
+
+</html>
