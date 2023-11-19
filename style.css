@@ -1,0 +1,26 @@
+#viewinputform {
+    margin: 28px;
+    margin-bottom: 80px;
+}
+
+#bigbutcontainer {
+    margin: 28px;
+}
+
+.myselect {
+    padding: 10px;
+    margin: 10px;
+    border: black;
+    border-style: solid;
+    margin: 28px;
+    display: none;
+}
+
+.bigbut {
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+    margin: 2px;
+    /* color: blue; */
+
+}
