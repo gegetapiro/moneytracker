@@ -2,7 +2,7 @@
 $table = $_POST["who3"];
 // $table = "chiara";
 include "connection.php";
-$query = "SELECT * FROM $table";
+$query = "SELECT * FROM $table ORDER by id DESC";
 
 $result = $conn->query($query);
 if ($result) {
